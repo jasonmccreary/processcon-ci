@@ -1,8 +1,8 @@
-name: Lint
-run-name: ${{ github.actor }} is check the project for lint
+name: Test
+run-name: ${{ github.actor }} is running the test suite
 on: [push]
 jobs:
-  Lint:
+  Test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -20,3 +20,9 @@ jobs:
         run: phplint --exclude=*.log .
       - name: Check code style
         run: pint --test
+      - name: Install composer dependencies
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Run tests
+        run: vendor/bin/phpunit

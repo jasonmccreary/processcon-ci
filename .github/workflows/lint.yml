@@ -15,11 +15,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          tools: laravel/pint
+          tools: laravel/pint, overtrue/phplint
       - name: Check PHP syntax
-        uses: overtrue/phplint@${{ matrix.php-version }}
-        with:
-          path: .
-          options: --exclude=*.log
+        run: phplint --exclude=*.log .
       - name: Check code style
         run: pint --test

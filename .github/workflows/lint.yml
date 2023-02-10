@@ -12,8 +12,11 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
+          tools: laravel/pint
       - name: Check PHP syntax
         uses: overtrue/phplint@8.1
         with:
           path: .
           options: --exclude=*.log
+      - name: Check code style
+        run: pint --test
